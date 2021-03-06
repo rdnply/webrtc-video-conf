@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 	"text/template"
 	"time"
@@ -42,6 +43,12 @@ func main() {
 	// Parse the flags passed to program
 	flag.Parse()
 
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
 	// Init other state
 	log.SetFlags(0)
 	trackLocals = map[string]*webrtc.TrackLocalStaticRTP{}
@@ -71,7 +78,7 @@ func main() {
 	}()
 
 	// start HTTP server
-	log.Fatal(http.ListenAndServe(*addr, nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 // Add to list of tracks and fire renegotation for all PeerConnections
