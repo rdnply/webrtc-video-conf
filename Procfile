@@ -1,1 +1,1 @@
-web: webrtc-video-conf
+web: ./webrtc-video-conf
