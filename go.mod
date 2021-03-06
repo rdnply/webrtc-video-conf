@@ -1,5 +1,6 @@
 module github.com/rdnply/webrtc-video-conf
 
+// +heroku goVersion go1.12.17
 go 1.15
 
 require (
