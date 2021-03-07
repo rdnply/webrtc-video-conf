@@ -230,7 +230,43 @@ func websocketHandler(w http.ResponseWriter, r *http.Request) {
 	defer c.Close() //nolint
 
 	// Create new PeerConnection
-	peerConnection, err := webrtc.NewPeerConnection(webrtc.Configuration{})
+	peerConnection, err := webrtc.NewPeerConnection(webrtc.Configuration{
+		ICEServers: []webrtc.ICEServer{
+			{
+				URLs: []string{
+					"stun:stun.l.google.com:19302",
+					"stun:stun.l.google.com:19302",
+					"stun:stun1.l.google.com:19302",
+					"stun:stun2.l.google.com:19302",
+					"stun:stun3.l.google.com:19302",
+					"stun:stun4.l.google.com:19302",
+					"stun:stun.ekiga.net",
+					"stun:stun.ideasip.com",
+					"stun:stun.schlund.de",
+					"stun:stun.stunprotocol.org:3478",
+					"stun:stun.voiparound.com",
+					"stun:stun.voipbuster.com",
+					"stun:stun.voipstunt.com"},
+			},
+			{
+				URLs:       []string{"turn:192.158.29.39:3478?transport=udp"},
+				Username:   "28224511:1379330808",
+				Credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+			},
+			{
+				URLs:       []string{"turn:192.158.29.39:3478?transport=udp"},
+				Username:   "28224511:1379330808",
+				Credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+			},
+			{
+				URLs:       []string{"turn:13.54.1.1:3478?transport=tcp"},
+				Username:   "user",
+				Credential: "root",
+			},
+
+		},
+		SDPSemantics: webrtc.SDPSemanticsUnifiedPlanWithFallback,
+	})
 	if err != nil {
 		log.Print(err)
 		return
