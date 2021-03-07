@@ -58,7 +58,7 @@ func main() {
 
 	// index.html handler
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if err := indexTemplate.Execute(w, "ws://"+r.Host+"/websocket"); err != nil {
+		if err := indexTemplate.Execute(w, "wss://"+r.Host+"/websocket"); err != nil {
 			log.Fatal(err)
 		}
 	})
@@ -71,7 +71,7 @@ func main() {
 	}()
 
 	// start HTTP server
-	log.Fatal(http.ListenAndServe(*addr, nil))
+	log.Fatal(http.ListenAndServeTLS(*addr, "server.crt", "server.key", nil))
 }
 
 // Add to list of tracks and fire renegotation for all PeerConnections

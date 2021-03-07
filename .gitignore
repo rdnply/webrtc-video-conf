@@ -2,6 +2,8 @@
 *.txt
 *.exe
 *.log
+*.crt
+*.key
 
 .DS_Store
 *.[56789ao]
