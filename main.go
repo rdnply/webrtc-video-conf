@@ -10,6 +10,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/go-chi/chi"
 	"github.com/gorilla/websocket"
 	"github.com/pion/rtcp"
 	"github.com/pion/webrtc/v3"
@@ -47,21 +48,25 @@ func main() {
 	trackLocals = map[string]*webrtc.TrackLocalStaticRTP{}
 
 	// Read index.html from disk into memory, serve whenever anyone requests /
-	indexHTML, err := ioutil.ReadFile("index.html")
+	indexHTML, err := ioutil.ReadFile("./web/index.html")
 	if err != nil {
 		panic(err)
 	}
 	indexTemplate = template.Must(template.New("").Parse(string(indexHTML)))
 
+	r := chi.NewRouter()
+
 	// websocket handler
-	http.HandleFunc("/websocket", websocketHandler)
+	r.HandleFunc("/websocket", websocketHandler)
 
 	// index.html handler
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if err := indexTemplate.Execute(w, "wss://"+r.Host+"/websocket"); err != nil {
 			log.Fatal(err)
 		}
 	})
+
+	r.Handle("/web/*", http.StripPrefix("/web/", http.FileServer(http.Dir("web"))))
 
 	// request a keyframe every 3 seconds
 	go func() {
@@ -71,7 +76,7 @@ func main() {
 	}()
 
 	// start HTTP server
-	log.Fatal(http.ListenAndServeTLS(*addr, "server.crt", "server.key", nil))
+	log.Fatal(http.ListenAndServeTLS(*addr, "server.crt", "server.key", r))
 }
 
 // Add to list of tracks and fire renegotation for all PeerConnections
@@ -118,7 +123,7 @@ func signalPeerConnections() {
 				return true // We modified the slice, start from the beginning
 			}
 
-			// map of sender we already are seanding, so we don't double send
+			// map of sender we already are sending, so we don't double send
 			existingSenders := map[string]bool{}
 
 			for _, sender := range peerConnections[i].peerConnection.GetSenders() {
@@ -263,7 +268,6 @@ func websocketHandler(w http.ResponseWriter, r *http.Request) {
 				Username:   "user",
 				Credential: "root",
 			},
-
 		},
 		SDPSemantics: webrtc.SDPSemanticsUnifiedPlanWithFallback,
 	})

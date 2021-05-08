@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="/web/general.css">
+    <link rel="stylesheet" href="/web/core.css">
+</head>
+<body>
+<h3> Local Video </h3>
+<div class="localCamera">
+    <video id="localVideo" width="160" height="120" autoplay muted></video>
+    <br/>
+</div>
+
+
+<h3> Remote Video </h3>
+<div id="remoteCameras"></div>
+
+</body>
+<script src="web/webrtc.js"></script>
+<script src="web/control_cameras.js"></script>
+<script src="web/resize.js"></script>
+<script>
+    var url = "{{.}}";
+
+    navigator.mediaDevices.getUserMedia({video: true})
+        .then(stream => {
+            let pc = new RTCPeerConnection()
+            pc.ontrack = function (event) {
+                if (event.track.kind === 'audio') {
+                    return
+                }
+
+                addCamera(event)
+            }
+
+            document.getElementById('localVideo').srcObject = stream
+            stream.getTracks().forEach(track => pc.addTrack(track, stream))
+
+            processWebRTC(pc, url)
+
+            window.onresize = dish;
+        }).catch(window.alert)
+</script>
+</html>
