@@ -1,17 +1,37 @@
-.localCamera {
+body,
+html {
+    background: #9866ff;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    font-size: 0;
+    box-sizing: border-box;
+}
+
+#localCamera {
     position: absolute;
     vertical-align: middle;
     align-self: center;
     border-radius: 10px;
-    overflow: hidden;
     display: inline-block;
     box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.4);
     background: #fff;
     animation: show 0.4s ease;
     overflow: hidden;
     border-radius: 10px;
-    bottom: 10px;
-    right: 10px;
+    top: 0px;
+    left: 0px;
+    /*bottom: 10px;*/
+    /*right: 10px;*/
+    cursor: move;
+    z-index: 9;
+}
+
+#localVideo {
+    width: 160px;
+    height: 120px;
 }
 
 #remoteCameras {

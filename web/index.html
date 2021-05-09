@@ -3,14 +3,12 @@
 <head>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" type="text/css" href="/web/general.css">
-    <link rel="stylesheet" href="/web/core.css">
+    <link rel="stylesheet" href="/web/index.css">
 </head>
 <body>
 <h3> Local Video </h3>
-<div class="localCamera">
-    <video id="localVideo" width="160" height="120" autoplay muted></video>
-    <br/>
+<div id="localCamera">
+    <video id="localVideo" autoplay muted></video>
 </div>
 
 
@@ -20,7 +18,7 @@
 </body>
 <script src="web/webrtc.js"></script>
 <script src="web/control_cameras.js"></script>
-<script src="web/resize.js"></script>
+<script src="web/move_camera.js"></script>
 <script>
     var url = "{{.}}";
 
@@ -43,4 +41,5 @@
             window.onresize = dish;
         }).catch(window.alert)
 </script>
+<script src="web/resize.js"></script>
 </html>
