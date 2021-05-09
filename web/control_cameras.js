@@ -14,7 +14,7 @@ function addCamera(event) {
     el.className = 'remoteVideo'
     el.srcObject = event.streams[0]
     el.autoplay = true
-    el.controls = true
+    el.muted = true
 
     camera.appendChild(el)
 

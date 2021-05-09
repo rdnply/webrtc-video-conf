@@ -14,6 +14,9 @@
 <h3> Remote Video </h3>
 <div id="remoteCameras"></div>
 
+<div id="panel">
+    <button id="processAudio"></button>
+</div>
 </body>
 <script>
     document.getElementById('localCamera').style.top = window.innerHeight - localCamera.offsetHeight + 'px';
@@ -24,7 +27,7 @@
 <script>
     var url = "{{.}}";
 
-    navigator.mediaDevices.getUserMedia({video: true})
+    navigator.mediaDevices.getUserMedia({video: true, audio: true })
         .then(stream => {
             let pc = new RTCPeerConnection()
             pc.ontrack = function (event) {
@@ -44,4 +47,5 @@
         }).catch(window.alert)
 </script>
 <script src="web/resize.js"></script>
+<script src="web/panel.js"></script>
 </html>
