@@ -32,10 +32,10 @@ function dish() {
     }
 
     max = max - (margin * 2);
-    setWidthAndMargin(max, margin);
+    setCameraSize(max, margin);
 }
 
-function setWidthAndMargin(width, margin) {
+function setCameraSize(width, margin) {
     let cameras = document.getElementsByClassName('remoteCamera');
     for (var s = 0; s < cameras.length; s++) {
         cameras[s].style.width = width + "px";
