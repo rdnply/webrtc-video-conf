@@ -16,6 +16,7 @@
 
 <div id="panel">
     <button id="processAudio"></button>
+    <button id="processVideo"></button>
 </div>
 </body>
 <script>
@@ -40,7 +41,7 @@
 
             document.getElementById('localVideo').srcObject = stream
             stream.getTracks().forEach(track => pc.addTrack(track, stream))
-
+            
             processWebRTC(pc, url)
 
             window.onresize = dish;

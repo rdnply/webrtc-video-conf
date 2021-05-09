@@ -98,6 +98,14 @@ html {
     border-radius: 1000px;
     position: absolute;
     margin-left: 20px;
-    left: 50%;
+    /*left: 50%;*/
     top: 20px;
+}
+
+#processAudio {
+    left: 400px;
+}
+
+#processVideo {
+    left: 500px;
 }
