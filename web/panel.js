@@ -34,30 +34,18 @@ let black = ({width = 160, height = 120} = {}) => {
 let blackSilence = (...args) => new MediaStream([black(...args), silence()]);
 
 function processVideo() {
-    if (isEnableVideo) {
-        let video = document.getElementById('localVideo');
-        let stream = video.srcObject;
+    let video = document.getElementById('localVideo');
 
-        stream.getVideoTracks().forEach(track => track.stop());
+    navigator.mediaDevices.getUserMedia({video: true})
+        .then(stream => {
+            if (!isEnableVideo) {
+                stream = blackSilence();
+            }
 
-        navigator.mediaDevices.getUserMedia({video: true})
-            .then(stream => {
-                video.srcObject = blackSilence();
-
-                return Promise.all(pc.getSenders().map(sender =>
-                    sender.replaceTrack(blackSilence().getVideoTracks()[0])))
-                // .catch(window.alert);
-            });
-    } else {
-        navigator.mediaDevices.getUserMedia({video: true})
-            .then(stream => {
-                document.getElementById('localVideo').srcObject = stream
-
-                return Promise.all(pc.getSenders().map(sender =>
-                    sender.replaceTrack(stream.getVideoTracks()[0])))
-                // .catch(window.alert);
-            })
-    }
+            video.srcObject = stream;
+            return Promise.all(pc.getSenders().map(sender =>
+                sender.replaceTrack(stream.getVideoTracks()[0])));
+        });
     isEnableVideo = !isEnableVideo;
 }
 
