@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div class="loginForm">
+        <form id="form" action="/login" method="post">
+            <h2 class="text-center">Login</h2>
+            {{ with .Error }}
+            <p class="error">{{ . }}</p>
+            {{ end }}
+            <input class="input-control" type="text" placeholder="Type login here..." id="login" name="login"
+                   value="{{ .Login }}"><br>
+            <input class="submit-btn" type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+</body>
+</html>

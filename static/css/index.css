@@ -20,7 +20,6 @@ html {
     background: #fff;
     animation: show 0.4s ease;
     overflow: hidden;
-    border-radius: 10px;
     left: 0px;
     cursor: move;
     z-index: 9;
@@ -55,7 +54,6 @@ html {
     box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.4);
     background: #fff;
     animation: show 0.4s ease;
-
 }
 
 .remoteCamera {
@@ -108,4 +106,17 @@ html {
 
 #processVideo {
     left: 500px;
+}
+
+.inputLogin {
+    width: 340px;
+    height: 200px;
+    position: absolute;
+    vertical-align: middle;
+    align-self: center;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    animation: show 0.4s ease;
 }
