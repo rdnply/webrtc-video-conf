@@ -319,7 +319,7 @@ func websocketHandler(w http.ResponseWriter, r *http.Request) {
 		switch p {
 		case webrtc.PeerConnectionStateFailed:
 			if err := peerConnection.Close(); err != nil {
-				log.Print(err)
+				log.Println(err)
 			}
 		case webrtc.PeerConnectionStateClosed:
 			signalPeerConnections()
@@ -342,6 +342,10 @@ func websocketHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
+	})
+
+	peerConnection.OnNegotiationNeeded(func() {
+		signalPeerConnections()
 	})
 
 	// Signal for the new PeerConnection

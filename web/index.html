@@ -27,10 +27,10 @@
 <script src="web/move_camera.js"></script>
 <script>
     var url = "{{.}}";
-
+    let pc;
     navigator.mediaDevices.getUserMedia({video: true, audio: true })
         .then(stream => {
-            let pc = new RTCPeerConnection()
+            pc = new RTCPeerConnection()
             pc.ontrack = function (event) {
                 if (event.track.kind === 'audio') {
                     return

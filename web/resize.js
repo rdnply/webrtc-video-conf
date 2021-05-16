@@ -9,8 +9,10 @@ function area(increment, count, width, height, margin = 10) {
         w = w + increment + (margin * 2);
         i++;
     }
-    if (h > height) return false;
-    else return increment;
+    if (h > height)
+        return false;
+    else
+        return increment;
 }
 
 function dish() {
